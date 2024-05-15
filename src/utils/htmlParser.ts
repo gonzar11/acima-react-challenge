@@ -1,4 +1,21 @@
-import { parse } from "node-html-parser";
+import { parse, HTMLElement } from "node-html-parser";
+
+function validateHtmlStructure(root: HTMLElement ) {
+  const h2Elements = root.querySelectorAll('h2');
+
+  if (h2Elements.length !== 2) {
+      throw new Error('The HTML should contain exactly two h2 elements.');
+  }
+
+  for (let i = 0; i < h2Elements.length; i++) {
+      const h2Element = h2Elements[i];
+      const nextElement = h2Element.nextElementSibling;
+
+      if (!nextElement || nextElement.tagName !== 'TABLE') {
+          throw new Error(`The h2 element at position ${i+1} is not immediately followed by a table.`);
+      }
+  }
+}
 
 interface HtmlParserInterface {
   extractBodyContent: () => string;
@@ -6,7 +23,9 @@ interface HtmlParserInterface {
 }
 
 function HtmlParser(html: string): HtmlParserInterface {
-  const root = parse(html); // Parse the HTML into a document-like structure.
+  const root = parse(html);
+
+  validateHtmlStructure(root);
 
   return {
     extractBodyContent: function(): string {
