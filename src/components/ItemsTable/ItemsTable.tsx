@@ -21,13 +21,10 @@ const ItemsTable: React.FC<ItemsTableProps> = ({ head, body, style }) => (
       ))}
     </thead>
     <tbody>
-      {body.map((row, rowIndex) => (
+      {body.map((tableItemRow, rowIndex) => (
         <tr key={`body-row-${rowIndex}`}>
-          {row.map((cell, cellIndex) => (
-            <td
-              key={`body-cell-${cellIndex}`}
-              style={{ ...parseStyle(cell.style) }}
-            >
+          {Object.entries(tableItemRow).map(([key, cell]) => (
+            <td key={key} style={{ ...parseStyle(cell.style) }}>
               {cell.content}
             </td>
           ))}
