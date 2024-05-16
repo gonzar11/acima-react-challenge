@@ -9,7 +9,7 @@ const mockHead: ContentBlock[][] = [
 const mockBody = [
   {
     itemId: { content: "123", style: { color: "red" } },
-    itemPrice: { content: "$10", style: { color: "green" } },
+    itemPrice: { content: "10", style: { color: "green" } },
   },
 ];
 
@@ -33,7 +33,7 @@ describe("ItemsTable", () => {
     render(<ItemsTable {...mockData} />);
 
     expect(screen.getByText("123")).toBeInTheDocument();
-    expect(screen.getByText("$10")).toBeInTheDocument();
+    expect(screen.getByText("$ 10")).toBeInTheDocument();
   });
 
   it("applies styles correctly", () => {
@@ -43,7 +43,7 @@ describe("ItemsTable", () => {
     const thead = container.querySelector("thead");
     const tbody = container.querySelector("tbody");
     const tdItemId = screen.getByText("123").closest("td");
-    const tdItemPrice = screen.getByText("$10").closest("td");
+    const tdItemPrice = screen.getByText("$ 10").closest("td");
 
     expect(table).toHaveStyle("border: 1px solid black");
     expect(thead).toHaveStyle("background-color: lightgray");
