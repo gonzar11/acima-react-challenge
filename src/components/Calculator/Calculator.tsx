@@ -63,10 +63,10 @@ const Calculator: React.FC<CalculatorProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      <div className="text-6xl font-bold">{`$ ${result}`}</div>
+    <div className="flex flex-col items-center justify-center text-center w-full max-w-96">
+      <div className="text-6xl font-bold">{result ? `$ ${result}` : ""}</div>
       <input
-        className={`mt-4 w-full max-w-md rounded-md border px-4 py-2 text-lg focus:outline-none focus:ring-2 ${
+        className={`mt-4 w-full rounded-md border px-4 py-2 text-lg focus:outline-none focus:ring-2 ${
           error
             ? "border-red-500 focus:ring-red-500"
             : "border-gray-300 focus:ring-gray-500"
@@ -78,12 +78,12 @@ const Calculator: React.FC<CalculatorProps> = ({
         }
       />
       <button
-        className="mt-4 rounded-md bg-gray-900 px-6 py-2 text-white transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        className="mt-4 w-full rounded-md bg-gray-900 px-6 py-2 text-white transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500"
         onClick={handleCalculate}
       >
         Calculate
       </button>
-      {error && <div className="mt-2 text-lg text-red-600">{error}</div>}
+      {error && <div className="mt-2 w-full text-red-600">{error}</div>}
     </div>
   );
 };
