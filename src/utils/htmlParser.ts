@@ -19,6 +19,24 @@ function validateHtmlStructure(root: HTMLElement) {
         } is not immediately followed by a table.`
       );
     }
+
+    const table = nextElement;
+    const headerRows = table.querySelectorAll("thead tr");
+    const bodyRows = table.querySelectorAll("tbody tr");
+
+    for (let j = 0; j < headerRows.length; j++) {
+      const headerCells = headerRows[j].querySelectorAll("th");
+      if (headerCells.length !== 2) {
+        throw new Error("Each header row must have exactly two cells.");
+      }
+    }
+
+    for (let k = 0; k < bodyRows.length; k++) {
+      const bodyCells = bodyRows[k].querySelectorAll("td");
+      if (bodyCells.length !== 2) {
+        throw new Error("Each body row must have exactly two cells.");
+      }
+    }
   }
 }
 
@@ -38,9 +56,7 @@ function parseHeaderRows(rows: HTMLElement[]): TableCell[][] {
 function parseBodyRows(rows: HTMLElement[]): { itemId: TableCell, itemPrice: TableCell }[] {
   return rows.map((row) => {
     const cells = row.querySelectorAll("td");
-    if (cells.length !== 2) {
-      throw new Error("Each body row must have exactly two cells");
-    }
+
     return {
       itemId: {
         content: cells[0].textContent,
