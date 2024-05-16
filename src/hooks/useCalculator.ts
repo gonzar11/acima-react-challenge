@@ -24,7 +24,7 @@ const useCalculator = ({
   const [error, setError] = useState<string>("");
 
   const calculate = () => {
-    const trimmedInput = input.trim();
+    const trimmedInput = input.trim().toUpperCase();
     const escapedOperations = ALLOWED_OPERATIONS.map((op) => `\\${op}`).join(
       ""
     );
