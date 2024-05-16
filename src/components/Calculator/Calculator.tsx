@@ -26,7 +26,9 @@ const Calculator: React.FC<CalculatorProps> = ({
 
   return (
     <>
-      {children}
+      <div className="flex-col block w-72 lg:hidden border-r p-6">
+        {children}
+      </div>
       <div className="flex flex-col items-center justify-center text-center w-full max-w-96">
         <div className="text-6xl font-bold">{result ? `$ ${result}` : ""}</div>
         <input
