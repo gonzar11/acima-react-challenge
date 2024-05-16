@@ -3,9 +3,11 @@ import { encodedHtml } from "@/data/data";
 import { decodeBase64ToString } from "@/utils/stringUtils";
 import HtmlParser from "@/utils/htmlParser";
 import Sidebar from "@/components/Sidebar";
+import Calculator from "@/components/Calculator";
 
 const Home: React.FC = () => {
   const parser = HtmlParser(decodeBase64ToString(encodedHtml));
+  const [totalA, totalB] = parser.extractTotals();
 
   return (
     <main className="flex h-screen w-full flex-col">
@@ -15,7 +17,7 @@ const Home: React.FC = () => {
       <div className="flex flex-1">
         <Sidebar htmlParser={parser} />
         <div className="flex-1 p-8">
-          <h1>Main content here</h1>
+          <Calculator itemsPriceTotalA={totalA} itemsPriceTotalB={totalB} />
         </div>
       </div>
     </main>
