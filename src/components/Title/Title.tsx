@@ -5,8 +5,13 @@ interface TitleProps {
   style?: React.CSSProperties;
 }
 
-const Title: React.FC<TitleProps> = ({ text, style }) => (
-  <h2 style={style}>{text}</h2>
-);
+const Title: React.FC<TitleProps> = ({ text, style }) => {
+  const defaultClasses = "pl-2 text-lg font-bold leading-tight mb-2";
+  return (
+    <h2 className={!style ? defaultClasses : ""} style={style}>
+      {text}
+    </h2>
+  );
+};
 
 export default Title;
