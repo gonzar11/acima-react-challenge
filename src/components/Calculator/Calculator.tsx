@@ -1,65 +1,25 @@
 "use client";
 
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { ChangeEvent, FormEvent } from "react";
+import useCalculator from "@/hooks/useCalculator";
 
 interface CalculatorProps {
   itemsPriceTotalA: number;
   itemsPriceTotalB: number;
 }
 
-const ALLOWED_OPERATIONS = ["+", "-", "*", "/", "%"];
-
 const Calculator: React.FC<CalculatorProps> = ({
   itemsPriceTotalA,
   itemsPriceTotalB,
 }) => {
-  const [input, setInput] = useState<string>("");
-  const [result, setResult] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const { input, setInput, result, error, calculate } = useCalculator({
+    itemsPriceTotalA,
+    itemsPriceTotalB,
+  });
 
   const handleCalculate = (e: FormEvent) => {
     e.preventDefault();
-    const escapedOperations = ALLOWED_OPERATIONS.map((op) => `\\${op}`).join(
-      ""
-    );
-    const regex = new RegExp(
-      `^([AB])(\\s*([${escapedOperations}])\\s*([AB]))?$`
-    );
-    const match = input.trim().match(regex);
-
-    if (match) {
-      let expression: string;
-      let calculatedResult: number;
-
-      if (match[3] && match[4]) {
-        const firstOperand =
-          match[1] === "A" ? itemsPriceTotalA : itemsPriceTotalB;
-        const operator = match[3];
-        const secondOperand =
-          match[4] === "A" ? itemsPriceTotalA : itemsPriceTotalB;
-
-        expression = `${firstOperand} ${operator} ${secondOperand}`;
-      } else {
-        expression = (
-          match[1] === "A" ? itemsPriceTotalA : itemsPriceTotalB
-        ).toString();
-      }
-
-      try {
-        const calculate = new Function("return " + expression);
-        calculatedResult = calculate();
-        setResult(`${calculatedResult}`);
-        setError("");
-      } catch (error) {
-        setError("Error in calculation.");
-        setResult("");
-      }
-    } else {
-      setError(
-        'Invalid input format. Please enter "A", "B", or use A or B followed by an operator (+, -, *, /, %) and A or B (e.g., A+B, B-A).'
-      );
-      setResult("");
-    }
+    calculate();
   };
 
   return (
