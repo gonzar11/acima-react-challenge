@@ -16,7 +16,10 @@ const Home: React.FC = () => {
     <main className="flex h-screen w-full flex-col">
       <Header />
       <div className="flex flex-1">
-        <div className="flex-col hidden w-72 lg:flex border-r bg-gray-100 p-6">
+        <div
+          data-testid="items-tables-wrapper-container"
+          className="flex-col hidden w-72 lg:flex border-r bg-gray-100 p-6"
+        >
           <ItemsTablesWrapper titles={titles} tables={tables} />
         </div>
         <div className="relative flex w-full flex-grow overflow-x-hidden bg-white flex-col items-center justify-center">

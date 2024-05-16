@@ -25,7 +25,7 @@ const Calculator: React.FC<CalculatorProps> = ({
   };
 
   return (
-    <>
+    <div data-testid="calculator" className="w-full max-w-96 mx-auto">
       <div
         data-testid="children-container"
         className="flex-col block w-full max-w-96 lg:hidden p-6"
@@ -62,7 +62,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

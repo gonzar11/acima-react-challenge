@@ -13,7 +13,7 @@ const ItemsTablesWrapper: React.FC<ItemsTablesWrapperProps> = ({
   tables,
 }) => {
   return (
-    <>
+    <div data-testid="items-tables-wrapper">
       {titles.map((title, index) => (
         <div key={index}>
           <Title text={title.content} style={title.style} />
@@ -26,7 +26,7 @@ const ItemsTablesWrapper: React.FC<ItemsTablesWrapperProps> = ({
           />
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
