@@ -26,12 +26,18 @@ const Calculator: React.FC<CalculatorProps> = ({
 
   return (
     <>
-      <div className="flex-col block w-72 lg:hidden border-r p-6">
+      <div
+        data-testid="children-container"
+        className="flex-col block w-full max-w-96 lg:hidden p-6"
+      >
         {children}
       </div>
       <div className="flex flex-col items-center justify-center text-center w-full max-w-96">
-        <div className="text-6xl font-bold">{result ? `$ ${result}` : ""}</div>
+        <div data-testid="result" className="text-6xl font-bold">
+          {result ? `$ ${result}` : ""}
+        </div>
         <input
+          data-testid="input"
           className={`mt-4 w-full rounded-md border px-4 py-2 text-lg focus:outline-none focus:ring-2 ${
             error
               ? "border-red-500 focus:ring-red-500"
@@ -44,12 +50,17 @@ const Calculator: React.FC<CalculatorProps> = ({
           }
         />
         <button
+          data-testid="calculate-button"
           className="mt-4 w-full rounded-md bg-gray-900 px-6 py-2 text-white transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500"
           onClick={handleCalculate}
         >
           Calculate
         </button>
-        {error && <div className="mt-2 w-full text-red-600">{error}</div>}
+        {error && (
+          <div data-testid="error-message" className="mt-2 w-full text-red-600">
+            {error}
+          </div>
+        )}
       </div>
     </>
   );
