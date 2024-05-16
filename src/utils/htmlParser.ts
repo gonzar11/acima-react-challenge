@@ -1,4 +1,5 @@
 import { parse, HTMLElement } from "node-html-parser";
+import {parseStyle} from "./styleUtils";
 
 function validateHtmlStructure(root: HTMLElement) {
   const h2Elements = root.querySelectorAll("h2");
@@ -29,7 +30,7 @@ function parseHeaderRows(rows: HTMLElement[]): TableCell[][] {
     }
     return cells.map(cell => ({
       content: cell.textContent,
-      style: cell.getAttribute("style") || "",
+      style: parseStyle(cell.getAttribute("style")),
     }));
   });
 }
@@ -43,11 +44,11 @@ function parseBodyRows(rows: HTMLElement[]): { itemId: TableCell, itemPrice: Tab
     return {
       itemId: {
         content: cells[0].textContent,
-        style: cells[0].getAttribute("style") || "",
+        style: parseStyle(cells[0].getAttribute("style"))
       },
       itemPrice: {
         content: cells[1].textContent,
-        style: cells[1].getAttribute("style") || "",
+        style: parseStyle(cells[1].getAttribute("style")),
       }
     };
   });
@@ -56,13 +57,13 @@ function parseBodyRows(rows: HTMLElement[]): { itemId: TableCell, itemPrice: Tab
 export interface HtmlParserInterface {
   extractBodyContent: () => string;
   extractTotals: () => number[];
-  getTitles: () => { text: string; style: string }[];
+  getTitles: () => { text: string; style?: React.CSSProperties }[];
   getTables: () => TableData[];
 }
 
 interface TableCell {
   content: string;
-  style: string;
+  style?: React.CSSProperties;
 }
 
 interface TableItemRow {
@@ -73,7 +74,7 @@ interface TableItemRow {
 export interface TableData {
   head: TableCell[][];
   body: TableItemRow[];
-  style: string;
+  style?: React.CSSProperties;
 }
 
 function HtmlParser(html: string): HtmlParserInterface {
@@ -99,11 +100,11 @@ function HtmlParser(html: string): HtmlParserInterface {
       });
       return totals;
     },
-    getTitles: function (): { text: string; style: string }[] {
+    getTitles: function (): { text: string; style?: React.CSSProperties }[] {
       const h2Elements = root.querySelectorAll("h2");
       const titles = h2Elements.map((h2) => ({
         text: h2.textContent,
-        style: h2.getAttribute("style") || "",
+        style: parseStyle(h2.getAttribute("style"))
       }));
       return titles;
     },
@@ -121,7 +122,7 @@ function HtmlParser(html: string): HtmlParserInterface {
         return {
           head: headRows,
           body: bodyRows,
-          style: table.getAttribute("style") || "",
+          style: parseStyle(table.getAttribute("style"))
         };
       });
 
