@@ -40,6 +40,7 @@ const ItemsTable: React.FC<ItemsTableProps> = ({
           <tr key={`body-row-${rowIndex}`}>
             {Object.entries(tableItemRow).map(([key, cell]) => (
               <td key={key} style={cell.style}>
+                {key === "itemPrice" ? "$ " : ""}
                 {cell.content}
               </td>
             ))}
