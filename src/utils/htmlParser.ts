@@ -90,6 +90,8 @@ interface TableItemRow {
 export interface TableData {
   head: ContentBlock[][];
   body: TableItemRow[];
+  headStyle?: React.CSSProperties;
+  bodyStyle?: React.CSSProperties;
   style?: React.CSSProperties;
 }
 
@@ -138,6 +140,8 @@ function HtmlParser(html: string): HtmlParserInterface {
         return {
           head: headRows,
           body: bodyRows,
+          headStyle: parseStyle(thead?.getAttribute("style")),
+          bodyStyle: parseStyle(tbody.getAttribute("style")),
           style: parseStyle(table.getAttribute("style"))
         };
       });

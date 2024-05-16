@@ -21,6 +21,8 @@ const ItemsTablesWrapper: React.FC<ItemsTablesWrapperProps> = ({
             head={tables[index].head}
             body={tables[index].body}
             style={tables[index].style}
+            headStyle={tables[index].headStyle}
+            bodyStyle={tables[index].bodyStyle}
           />
         </div>
       ))}
