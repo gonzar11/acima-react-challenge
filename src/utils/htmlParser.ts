@@ -40,7 +40,7 @@ function validateHtmlStructure(root: HTMLElement) {
   }
 }
 
-function parseHeaderRows(rows: HTMLElement[]): TableCell[][] {
+function parseHeaderRows(rows: HTMLElement[]): ContentBlock[][] {
   return rows.map((row) => {
     const cells = row.querySelectorAll("th");
     if (cells.length !== 2) {
@@ -53,7 +53,7 @@ function parseHeaderRows(rows: HTMLElement[]): TableCell[][] {
   });
 }
 
-function parseBodyRows(rows: HTMLElement[]): { itemId: TableCell, itemPrice: TableCell }[] {
+function parseBodyRows(rows: HTMLElement[]): { itemId: ContentBlock, itemPrice: ContentBlock }[] {
   return rows.map((row) => {
     const cells = row.querySelectorAll("td");
 
@@ -73,22 +73,22 @@ function parseBodyRows(rows: HTMLElement[]): { itemId: TableCell, itemPrice: Tab
 export interface HtmlParserInterface {
   extractBodyContent: () => string;
   extractTotals: () => number[];
-  getTitles: () => { text: string; style?: React.CSSProperties }[];
+  getTitles: () => ContentBlock[];
   getTables: () => TableData[];
 }
 
-interface TableCell {
+export interface ContentBlock {
   content: string;
   style?: React.CSSProperties;
 }
 
 interface TableItemRow {
-  itemId: TableCell;
-  itemPrice: TableCell;
+  itemId: ContentBlock;
+  itemPrice: ContentBlock;
 }
 
 export interface TableData {
-  head: TableCell[][];
+  head: ContentBlock[][];
   body: TableItemRow[];
   style?: React.CSSProperties;
 }
@@ -116,10 +116,10 @@ function HtmlParser(html: string): HtmlParserInterface {
       });
       return totals;
     },
-    getTitles: function (): { text: string; style?: React.CSSProperties }[] {
+    getTitles: function (): ContentBlock[] {
       const h2Elements = root.querySelectorAll("h2");
       const titles = h2Elements.map((h2) => ({
-        text: h2.textContent,
+        content: h2.textContent,
         style: parseStyle(h2.getAttribute("style"))
       }));
       return titles;

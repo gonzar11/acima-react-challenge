@@ -38,8 +38,8 @@ describe("HtmlParser", () => {
   it("should get titles with styles", () => {
     const titles = parser.getTitles();
     expect(titles).toEqual([
-      { text: "Title 1", style: { color: "red" } },
-      { text: "Title 2", style: undefined },
+      { content: "Title 1", style: { color: "red" } },
+      { content: "Title 2", style: undefined },
     ]);
   });
 
